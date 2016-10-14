@@ -4,4 +4,15 @@ $(document).ready(function() {
     $('#alert').fadeIn(500);
     console.log()
   }, 3000);
+
+ var i = 0;
+ setInterval(function(){
+   if (i > 100) {
+     i = 0;
+   }
+   var label = i + '%';
+   $('#auto_progress').css('width', label);
+   $('#auto_progress').html(label);
+   i++;
+ }, 500);
 });
