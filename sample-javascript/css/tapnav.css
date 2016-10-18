@@ -16,3 +16,7 @@ div.clrcle{
   border: 1px solid gray;
   border-radius: 100px;
 }
+
+#myTab i {
+  display: none;
+}
