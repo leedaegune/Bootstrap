@@ -25,25 +25,13 @@
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="color: rgb(93, 46, 14)">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">메인화면 <span class="sr-only">(current)</span></a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="botton" aria-expanded="false">Compoenent <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="./sample-compoenent/dropdown.html">Dropdown</a></li>
-                            <li><a href="./sample-compoenent/btngroup.html">Button Group</a></li>
-                            <li><a href="./sample-compoenent/btndropdown.html">Button Dropdown</a></li>
-                            <li class="divider"></li>
-                            <li><a href="./sample-compoenent/inputGroup.html">Input Group</a></li>
-                            <li><a href="./sample-compoenent/navs.html">Navigation</a></li>
-                            <li><a href="./sample-compoenent/navBar.html">Navigation Bar</a></li>
-                            <li><a href="./sample-compoenent/pagination.html">Pagination, Label, Badge</a></li>
-                            <li class="divider"></li>
-                            <li><a href="./sample-compoenent/jumbotron.html">Jumbotron, Page header, Thumbnail, Alerts</a></li>
-                            <li><a href="./sample-compoenent/progressbar.html">Progress Bar</a></li>
-                            <li><a href="./sample-compoenent/media.html">Media</a></li>
-                            <li><a href="./sample-compoenent/group.html">List Group, Panel, Responsive, Embed, Wells</a></li>
+                            <li><a href="./board.php">게시판</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
