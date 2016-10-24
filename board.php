@@ -1,25 +1,25 @@
-
 <?php
+/* Database 연결 */
+  $host = 'mysql:host=localhost;dbname=test';
+  $user = 'test';
+  $password = '1234';
+  $conn = new PDO($host, $user, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
 
-    /* Database 연결 */
-    $host = 'mysql:host=localhost;dbname=test';
-    $user = 'test';
-    $password = '1234';
-    $conn = new PDO($host, $user, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+  // 공지사항 게시물 리스트
+  $stmt = $conn->prepare('SELECT * FROM board WHERE notice=1 ORDER BY id DESC');
+  $stmt->execute();
+  $notice_list = $stmt->fetchAll();
 
-    /* Data 조회를 위한 Query 작성 */
-    $stmt = $conn->prepare('SELECT * FROM board');
-    /* Query 실행 */
-    $stmt->execute();
-    /* 조회한 Data를 배열(Array) 형태로 모두 저장 */
-    $list = $stmt->fetchAll();
+  // 일반 게시물 리스트
+  $stmt = $conn->prepare('SELECT * FROM board WHERE notice=0 ORDER BY id DESC');
+  $stmt->execute();
+  $list = $stmt->fetchAll();
 
-    /* Foreach 반복문을 이용해 가져온 모든 데이터를 출력한다 */
-    // foreach($list as $item) {
-    //     echo $member['name']." / ".$member['year']." / ".$member['address']."<br>";
-    // }
+  // 현재시간
+  $now = date('Y-m-d H:i:s', time() + 32400);
+  // echo time();
+
 ?>
-
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -78,10 +78,44 @@
           </tr>
         </thead>
         <tbody>
+          <?php foreach($notice_list as $item) { ?>
+          <tr class="notice_bg">
+            <td><span class="label label-danger label-lg">공지</span></td>
+            <td>
+              <a href="./board_detail.php?id=<?php echo $item['id'] ?>"><?php echo $item['title'] ?></a>
+              <?php
+                $stmt = $conn->prepare('SELECT * FROM reply WHERE board_id='.$item['id']);
+                $stmt->execute();
+                $reply_count = $stmt->fetchAll();
+              ?>
+              <?php if (count($reply_count) > 0) : ?>
+                <span class="badge"><?php echo count($reply_count)?></span>
+              <?php endif; ?>
+              <?php if ((strtotime($now)-strtotime($item['timestemp'])) < 86400) { ?>
+                <span class="label label-danger">HOT</span>
+              <?php } ?>
+            </td>
+            <td><?php echo $item['author'] ?></td>
+            <td><?php echo $item['timestemp'] ?></td>
+          </tr>
+          <?php } ?>
           <?php foreach($list as $item) { ?>
           <tr>
             <td><?php echo $item['id'] ?></td>
-            <td><a href="./board_detail.php?id=<?php echo $item['id'] ?>"><?php echo $item['title'] ?></a></td>
+            <td>
+              <a href="./board_detail.php?id=<?php echo $item['id'] ?>"><?php echo $item['title'] ?></a>
+              <?php
+                $stmt = $conn->prepare('SELECT * FROM reply WHERE board_id='.$item['id']);
+                $stmt->execute();
+                $reply_count = $stmt->fetchAll();
+              ?>
+              <?php if (count($reply_count) > 0) : ?>
+                <span class="badge"><?php echo count($reply_count)?></span>
+              <?php endif; ?>
+              <?php if ((strtotime($now)-strtotime($item['timestemp'])) < 86400) { ?>
+                <span class="label label-success">New</span>
+              <?php } ?>
+            </td>
             <td><?php echo $item['author'] ?></td>
             <td><?php echo $item['timestemp'] ?></td>
           </tr>
@@ -111,12 +145,13 @@
               </nav>
             </td>
             <td class="text-right">
-              <a href="./board_detail.php" class="btn btn-primary"><i class="fa fa-pencil"></i> 글쓰기</a>
+              <a href="./board_write.php" class="btn btn-primary"><i class="fa fa-pencil"></i> 글쓰기</a>
             </td>
           </tr>
         </tfoot>
       </table>
     </section>
+
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

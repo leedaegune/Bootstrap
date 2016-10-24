@@ -1,6 +1,7 @@
 
 <?php
-    $id = $_GET['id'];
+    $board_id = $_GET['id'];
+
     /* Database 연결 */
     $host = 'mysql:host=localhost;dbname=test';
     $user = 'test';
@@ -8,11 +9,18 @@
     $conn = new PDO($host, $user, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
 
     /* Data 조회를 위한 Query 작성 */
-    $stmt = $conn->prepare('SELECT * FROM board where id='.$id);
+    $stmt = $conn->prepare('SELECT * FROM board where id='.$board_id);
     /* Query 실행 */
     $stmt->execute();
     /* 조회한 Data를 배열(Array) 형태로 모두 저장 */
     $item = $stmt->fetchAll();
+
+    /* Data 조회를 위한 Query 작성 */
+    $stmt_list = $conn->prepare('SELECT * FROM reply WHERE board_id='.$board_id.' ORDER BY id DESC');
+    /* Query 실행 */
+    $stmt_list->execute();
+    /* 조회한 Data를 배열(Array) 형태로 모두 저장 */
+    $reply_list = $stmt_list->fetchAll();
 
     /* Foreach 반복문을 이용해 가져온 모든 데이터를 출력한다 */
     // foreach($list as $item) {
@@ -98,11 +106,83 @@
           <tr>
             <td colspan="2">
               <a href="#" class="btn btn-danger pull-right" data-toggle="modal" data-target="#remove_board"><i class="fa fa-trash"></i> 삭제</a>
+              <a href="./board_modify.php?id=<?php echo $item[0]['id']?>" class="btn btn-warning pull-right"><i class="fa fa-pencil">수정</i></a>
               <a href="./board.php" class="btn btn-success pull-right"><i class="fa fa-list" aria-hidden="true"></i> 목록</a>
             </td>
           </tr>
         </tfoot>
       </table>
+    </section>
+    <section class="container" id="reply_add">
+      <form id="insert_reply" action="./insert_reply.php" method="get">
+      <div class="row">
+        <div class="col-sm-12">
+          <hr>
+          <h3><i class="fa fa-commenting-o" aria-hidden="true"></i> 댓글(Reply)</h3>
+        </div>
+        <div class="col-sm-3">
+
+            <div class="input-group">
+              <span class="input-group-addon" id="reply_author">작성자</span>
+              <input type="text" class="form-control" name="reply_author" placeholder="댓글 작성자" aria-describedby="reply_author">
+        </div>
+      </div>
+        <div class="col-sm-7">
+
+          <div class="input-group">
+            <span class="input-group-addon" id="reply_content">내용</span>
+            <input type="text" class="form-control" name="reply_content" placeholder="이곳은 모두가 볼 수 있는 공간입니다. 타인을 향한 비판이나 욕설등은 제재를 당할 수도 있습니다." aria-describedby="reply_content">
+          </div>
+
+        </div>
+        <div class="col-sm-2">
+          <button type="submit" class="btn btn-danger" name="submit"><i class="fa fa-paper-plane"> 전송</i></button>
+        </div>
+      </div>
+      <input type="hidden" name="board_id" value="<?php echo $item[0]['id']?>">
+    </form>
+
+    </section>
+    <br><br><br>
+    <section class="container" id="reply_list">
+      <div class="table-responsive">
+      <table class="table table-striped table-hover table-condensed">
+        <thead>
+          <tr>
+            <th width="20%">
+              <p>작성자</p>
+            </th>
+            <th width="50%">
+              <p>내용</p>
+            </th>
+            <th width="30%">
+              <p>작성일</p>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+            <?php if (count($reply_list) > 0) { ?>
+              <?php foreach($reply_list as $reply_item) { ?>
+              <tr>
+                <td width="20%">
+                  <p><?php echo $reply_item['author']?></p>
+                </td>
+                <td width="50%">
+                  <p><?php echo $reply_item['content']?></p>
+                </td>
+                <td width="30%">
+                  <p><?php echo $item[0]['timestemp']?></p>
+                </td>
+              </tr>
+              <?php } ?>
+            <?php } else { ?>
+              <tr>
+                <td colspan="3" class="text-center">등록된 댓글이 없습니다</td>
+              </tr>
+            <?php } ?>
+          </tbody>
+      </table>
+    </div>
     </section>
 
     <div class="modal fade" id="remove_board" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
@@ -116,8 +196,13 @@
             <p>정말 삭제하시겠습니까?</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-            <button type="button" class="btn btn-danger">삭제</button>
+            <form class="" action="./delete_board.php" method="get">
+              <input type="hidden" name="id" value="<?php echo $item[0]['id']?>">
+              <button type="submit" class="btn btn-danger">삭제</button>
+
+
+              <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+            </form>
           </div>
         </div>
       </div>
@@ -126,5 +211,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="./lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./lib/z.js"></script>
   </body>
 </html>
