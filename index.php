@@ -11,6 +11,7 @@
 </head>
 
 <body>
+
     <nav class="navbar navbar-default navbar-static-top navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -57,6 +58,7 @@
 
     <section class="container1">
 
+
       <section class="container2">
         <!-- <div class="head">
 
@@ -75,8 +77,8 @@
             </div>
         </div>
       </section>
-    </section>
 
+    </section>
     <section class="container3 col-xs-6 col-xs-offset-3">
         <div id="carousel" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -117,10 +119,59 @@
             </div>
 
     </section>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <section class="container3">
+      <div class="col-sm-4">
+        <div id="log_info" class="panel panel-danger">
+          <div class="panel-heading">로그인</div>
+          <div class="panel-body">
+            <p class="text-danger error_msg hide">일치하는 회원정보가 없습니다</p>
+            <form id="login_panel" class="form-horizontal">
+              <div class="form-group">
+                <label for="loginid" class="col-sm-4 control-label">ID</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="loginid" name="loginid" placeholder="Login ID">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="loginpw" class="col-sm-4 control-label">Password</label>
+                <div class="col-sm-8">
+                  <input type="password" class="form-control" id="loginpw" name="loginpw" placeholder="Login Password">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-8">
+                  <a href="#" id="submit" class="btn btn-success">로그인</a>
+                  <a href="./signup.php" class="btn btn-danger">회원가입</a>
+                </div>
+              </div>
+            </form>
+            <div id="user_info" class="hide">
+              <p>ID : <span id="user_id"></span></p>
+              <p>권한 : <span id="user_role"></span></p>
+              <p>등록일 : <span id="user_timestamp"></span></p>
+              <a href="./logout.php" class="btn btn-danger">로그아웃</a>
+            </div>
+          </div>
+        </div>
+          <img src="./img/banner.jpg" class="banner" alt="banner" />
+        </div>
+      </div>
+      </form>
+      <div id="user_info" class="hide">
+        <p>ID : <span id="user_id"></span></p>
+        <p>권한 : <span id="user_role"></span></p>
+        <p>등록일 : <span id="user_timestamp"></span></p>
+        <a href="./logout.php" class="btn btn-danger">로그아웃</a>
+      </div>
+    </section>
 
     <script src="./lib/jquery-3.1.1.min.js"></script>
     <script src="./lib/bootstrap/js/bootstrap.min.js"></script>
     <script src="./sample-javascript/js/script.js"></script>
+    <script src="./js/login.js">
+
+    </script>
 </body>
 
 </html>
