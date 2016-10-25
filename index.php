@@ -120,7 +120,7 @@
 
     </section>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <section class="container3">
+    <section class="container">
       <div class="col-sm-4">
         <div id="log_info" class="panel panel-danger">
           <div class="panel-heading">로그인</div>
@@ -154,17 +154,9 @@
             </div>
           </div>
         </div>
-          <img src="./img/banner.jpg" class="banner" alt="banner" />
-        </div>
       </div>
-      </form>
-      <div id="user_info" class="hide">
-        <p>ID : <span id="user_id"></span></p>
-        <p>권한 : <span id="user_role"></span></p>
-        <p>등록일 : <span id="user_timestamp"></span></p>
-        <a href="./logout.php" class="btn btn-danger">로그아웃</a>
-      </div>
-    </section>
+    </div>
+  </section>
 
     <script src="./lib/jquery-3.1.1.min.js"></script>
     <script src="./lib/bootstrap/js/bootstrap.min.js"></script>

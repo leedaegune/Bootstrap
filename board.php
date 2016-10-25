@@ -141,7 +141,7 @@
               </nav>
             </td>
             <td class="text-right">
-              <a href="./board_write.php" class="btn btn-primary"><i class="fa fa-pencil"></i> 글쓰기</a>
+              <a href="./board_rite.php" class="btn btn-primary"><i class="fa fa-pencil"></i> 글쓰기</a>
             </td>
           </tr>
         </tfoot>
